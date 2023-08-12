@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&family=Merriweather&family=Montserrat+Alternates&family=Montserrat:wght@300;400;700;900&family=Roboto+Slab:wght@300&family=Rowdies:wght@300&family=Sacramento" rel="stylesheet">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>Stock Price Trend</title>
+</head>
+<body>
+    <div class="d-flex flex-column align-items-center" style="background-color: #2dcf58;">
+        <h1 style="font-family: 'Montserrat Alternates', sans-serif;" class="text-light my-4 display-1">Stock Prices Trend (Last 2 Years)</h1>
+        {% for index in range(items): %}
+            {% if index % 2 == 0: %}
+            <div style="max-height: 530px; max-width: 1300px;" class="even-item d-flex justify-content-start my-4 p-3 border border-dark rounded">
+                <div class="mx-2" style="max-width: 17rem;">
+            {% else: %}
+            <div style="max-height: 530px; max-width: 1300px;" class="odd-item d-flex flex-row-reverse justify-content-start my-4 p-3 border border-dark rounded">
+                <div class="text-end mx-2" style="max-width: 17rem;">
+            {% endif %}
+                    <p class="display-2 my-4">{{ names[index] }} </p>
+                    <p class="lead">({{ data[names[index]][0] }})</p>
+                </div>
+                <div class="overflow-y-scroll mx-2">
+                    <table class="table table-success table-nowrap">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Date</th>
+                          <th scope="col">Closing Price(₹)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for idx in range(length): %}
+                            <tr>
+                              <th scope="row">{{ idx + 1 }}</th>
+                              <td>{{ data[names[index]][1][idx] }}</td>
+                              <td>{{ data[names[index]][2][idx] }}</td>
+                            </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                </div>
+                <div class="chart mx-2" id="{{data[names[index]][0]}}">
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+    <script type='text/javascript'>
+        let graph;
+        {% for index in range(items): %}
+            graph = {{charts[index] | safe}};
+            Plotly.plot("{{data[names[index]][0]}}",graph,{});
+        {% endfor %}
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</body>
+</html>

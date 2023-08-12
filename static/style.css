@@ -1,0 +1,19 @@
+.even-item {
+    position: relative;
+    transition: 0.5s all;
+}
+
+.even-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 10px 10px 7px green;
+}
+
+.odd-item {
+    position: relative;
+    transition: 0.5s all;
+}
+
+.odd-item:hover {
+    transform: translateY(-10px);
+    box-shadow: -10px 10px 7px green;
+}
