@@ -17,9 +17,9 @@ headers = {
     "X-RapidAPI-Host": "apidojo-yahoo-finance-v1.p.rapidapi.com"
 }
 
-symbols = ["ACC.BO", "VOLTAS.NS", "RELIANCE.BO", "SBIN.NS", "MRF.NS"]
-names = ["ACC LTD", "Voltas LTD", "Reliance Industries LTD", "State Bank Of India", "MRF LTD"]
-ticker_symbol = ["ACC", "VOLTAS", "RELIANCE", "SBIN", "MRF"]
+symbols = ["ACC.BO", "VOLTAS.NS", "RELIANCE.BO", "SBIN.NS", "VADILALIND.BO"]
+names = ["ACC LTD", "Voltas LTD", "Reliance Industries LTD", "State Bank Of India", "Vadilal Industries LTD."]
+ticker_symbol = ["ACC", "VOLTAS", "RELIANCE", "SBIN", "VADILALIND"]
 
 
 # -------- Comment this section if you do not have an API KEY and want to use test data given below ---------------
@@ -43,7 +43,7 @@ charts = []
 for idx, key in enumerate(responses.keys()):
     df = pd.DataFrame(data={'Date': responses[key][1], 'Price': responses[key][2]}, columns=['Date', 'Price'])
     df['Date'] = pd.to_datetime(df['Date'], format="%d/%m/%Y").dt.date
-    df.to_csv(f"./data_files/{key}_{ticker_symbol[idx]}_{df.iloc[0]['Date']}_{df.iloc[-1]['Date']}_211080038.csv",
+    df.to_csv(f"./data_files/{key}_1month_{df.iloc[0]['Date']}_{df.iloc[-1]['Date']}_211080038.csv",
               columns=['Date', 'Price'], header=True)
     fig = px.line(df, x='Date', y='Price', markers=True, width=600, height=500)
     graph_json = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
